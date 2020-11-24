@@ -19,7 +19,7 @@ const applyText = (canvas, text) => {
 };
 
 client.on('message', async msg => {
-  if (msg.content === 'hewwo') {
+  if (msg.content.toLowerCase() === 'hewwo') {
     const canvas = Canvas.createCanvas(900, 862);
     const ctx = canvas.getContext('2d');
     const background = await Canvas.loadImage('./hewwo.jpg');
