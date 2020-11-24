@@ -7,19 +7,15 @@ const TOKEN = process.env.TOKEN;
 
 // text on image
 const applyText = (canvas, text) => {
-	const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
 
-	// Declare a base size of the font
-	let fontSize = 80;
+  let fontSize = 80;
 
-	do {
-		// Assign the font to the context and decrement it so it can be measured again
-		ctx.font = `${fontSize -= 10}px sans-serif`;
-		// Compare pixel width of the text to the canvas minus the approximate avatar size
-	} while (ctx.measureText(text).width > canvas.width - 300);
+  do {
+    ctx.font = `${fontSize -= 10}px sans-serif`;
+  } while (ctx.measureText(text).width > canvas.width);
 
-	// Return the result to use in the actual canvas
-	return ctx.font;
+  return ctx.font;
 };
 
 client.on('message', async msg => {
@@ -30,6 +26,7 @@ client.on('message', async msg => {
 
     // stretch to canvas dimension
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
     // text
     ctx.font = applyText(canvas, msg.member.displayName);
     ctx.fillStyle = '#000000';
@@ -37,7 +34,6 @@ client.on('message', async msg => {
 
     // process file
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'hewwo-reply.png');
-
     msg.reply('h-hewwo', attachment);
   }
 });
